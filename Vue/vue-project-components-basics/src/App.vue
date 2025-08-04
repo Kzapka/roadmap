@@ -1,48 +1,36 @@
 <script setup>
-import Footer from './components/Footer.vue';
-import Header from './components/Header.vue';
-import RecipeCard from './components/RecipeCard.vue';
-import recipes from './assets/data.js'
-import Banner from './components/Banner.vue';
-import Button from './components/Button.vue';
+import { ref } from 'vue';
+
+//data
+const nome = ref('Victor');
+const link = ref('https://www.scrimba.com');
+const disabled = ref(true);
+const attributes = {
+    id: 'big_emoji',
+    class: 'waving',
+};
+const coding_years = ref(3);
+const getFormattedDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('jp-JP', options);
+};
+const username = ref('rachelktyjohnson');
+const event = ref('dblclick');
+const blockLeave = () => {
+    alert("You can't leave!");
+};
 </script>
 
 <template>
-  <Header></Header>
-  <Banner>
-    <p>🚨 <strong>NEW RECIPE:</strong> Triple Chocolate Chip Cookies! 🚨</p>
-  </Banner>
-  <main>
-    <RecipeCard v-for="(recipe, index) in recipes" :key="index" :recipe="recipes[index]" />
-  </main>
-  <Button>Load More</Button>
-  <Footer></Footer>
+    <span v-bind="attributes">👋🏻</span>
+    <h1>Olá, meu nome é
+        <a @click.prevent="blockLeave()" :href="`${link}/@${username}`" target="_blank">{{ nome }}</a>
+    </h1>
+    <a :href="link" target="_blank">
+        <button :disabled>Clique para visitar meu site favorito! Se puder...</button>
+    </a>
+    <h2 @[event]="coding_years++">
+        {{ coding_years > 0 ? `Estou codando há ${coding_years} anos` : "Sou iniciante" }}
+    </h2>
+    <h3>Hoje é {{ getFormattedDate(new Date()) }}</h3>
 </template>
-
-<style scoped>
-main {
-  padding: 10px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  background: white;
-}
-
-@media (min-width:414px) {
-  main {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width:768px) {
-  main {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media (min-width:1200px) {
-  main {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-}
-</style>
