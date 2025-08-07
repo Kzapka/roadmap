@@ -8,7 +8,7 @@ export default {
     methods: {
         logout() {
             window.user = null
-            this.$router.push({ name: 'Home' })
+            this.$router.push({ name: 'Home', query: { logout: null } })
         }
     }
 }
@@ -17,7 +17,7 @@ export default {
     <div>
         <h1>Greetings, {{ username }}</h1>
         <button @click="logout">Logout</button>
-        <RouterLink :to="{name: 'invoices'}">
+        <RouterLink :to="{ name: 'invoices' }">
             <button>Invoices</button>
         </RouterLink>
     </div>

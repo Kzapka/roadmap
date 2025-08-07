@@ -1,9 +1,20 @@
 <script>
 import sourceData from '@/data.json'
+import { isNavigationFailure, NavigationFailureType } from 'vue-router'
 export default {
     data() {
         return {
             destinations: sourceData.destinations
+        }
+    },
+    methods: {
+        addDynamicRoute() {
+            this.$router.addRoute({
+                name: 'dynamic',
+                path: '/dynamic',
+                component: () => import('@/views/Login.vue'),
+            })
+            
         }
     }
 }
@@ -11,6 +22,8 @@ export default {
 <template>
     <div class="home">
         <h1>Home</h1>
+        <button @click="addDynamicRoute">Add Dynamic Route</button>
+        <RouterLink to="/dynamic">Visit Dynamic Route</RouterLink>
         <div class="destinations">
             <RouterLink v-for="destination in destinations" :key="destination.id"
                 :to="{ name: 'destination.show', params: { id: destination.id, slug: destination.slug } }">
