@@ -10,9 +10,22 @@ export default {
 
   <TheNavigation></TheNavigation>
   <div class="container">
-    <RouterView :key="$route.path"></RouterView>
+    <RouterView v-slot="{ Component }">
+      <Transition name="fade" mode="out-in">
+        <component :is="Component" :key="$route.path"></component>
+      </Transition>
+    </RouterView>
   </div>
-
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

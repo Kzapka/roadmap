@@ -1,13 +1,14 @@
 <script>
 import sourceData from '@/data.json'
 import ExperienceCard from '@/components/ExperienceCard.vue'
+import GoBack from '@/components/GoBack.vue'
 
 export default {
-    components: { ExperienceCard },
+    components: { ExperienceCard, GoBack },
     props: {
-        id: {
-            type: Number, required: true
-        }
+        id: { type: Number, required: true },
+        slug: { type: String, required: true },
+        experienceSlug: { type: String }
     },
     computed: {
         destination() {
@@ -20,20 +21,24 @@ export default {
 </script>
 
 <template>
-    <section v-if="destination" class="destination">
-        <h1>{{ destination.name }}</h1>
-        <div class="destination-details">
-            <img :src="`/images/${destination.image}`" :alt="destination.name">
-            {{ destination.description }}
-        </div>
-    </section>
-    <section class="experiences">
-        <h2>Top Experiences in {{ destination.name }}</h2>
-        <div class="cards">
-            <RouterLink v-for="experience in destination.experiences" :key="experience.slug"
-                :to="{ name: 'experience.show', params: { experienceSlug: experience.slug } }">
-                <ExperienceCard :experience="experience"></ExperienceCard>
-            </RouterLink>
-        </div>
-    </section>
+    <div>
+        <section v-if="destination" class="destination">
+            <h1>{{ destination.name }}</h1>
+            <GoBack></GoBack>
+            <div class="destination-details">
+                <img :src="`/images/${destination.image}`" :alt="destination.name">
+                {{ destination.description }}
+            </div>
+        </section>
+        <section class="experiences">
+            <h2>Top Experiences in {{ destination.name }}</h2>
+            <div class="cards">
+                <RouterLink v-for="experience in destination.experiences" :key="experience.slug"
+                    :to="{ name: 'experience.show', params: { experienceSlug: experience.slug } }">
+                    <ExperienceCard :experience="experience"></ExperienceCard>
+                </RouterLink>
+            </div>
+            <RouterView></RouterView>
+        </section>
+    </div>
 </template>
